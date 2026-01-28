@@ -3,17 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>💖 For My Love</title>
+  <title>🖤 To My World</title>
+
   <style>
     :root{
-      --pink:#ff3b7a;
-      --purple:#7c4dff;
-      --blue:#35c6ff;
-      --mint:#2ee6a6;
-      --yellow:#ffd166;
-      --text:#1b1b1b;
+      --red:#c1121f;
+      --red2:#ff2a3b;
+      --wine:#6b0f1a;
+      --black:#07070b;
+      --ink:#0c0c14;
+      --card: rgba(18, 18, 28, 0.78);
+      --cardBorder: rgba(255,255,255,0.08);
+      --text:#f4f4ff;
+      --muted: rgba(244,244,255,0.78);
     }
-    *{box-sizing:border-box}
+
+    *{ box-sizing:border-box; }
+
     body{
       margin:0;
       font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -23,55 +29,66 @@
       place-items:center;
       padding:24px;
       background:
-        radial-gradient(900px 600px at 10% 10%, #ffe4f1 0%, transparent 60%),
-        radial-gradient(900px 600px at 90% 20%, #e8e7ff 0%, transparent 55%),
-        radial-gradient(900px 600px at 70% 90%, #e3fbff 0%, transparent 55%),
-        linear-gradient(135deg, #fff7fb, #f6f7ff);
+        radial-gradient(900px 650px at 20% 20%, rgba(193,18,31,.22) 0%, transparent 60%),
+        radial-gradient(900px 650px at 80% 25%, rgba(255,42,59,.12) 0%, transparent 58%),
+        radial-gradient(900px 650px at 55% 85%, rgba(107,15,26,.14) 0%, transparent 62%),
+        linear-gradient(135deg, var(--black), var(--ink));
       overflow:hidden;
     }
 
-    .bg{
+    /* floating black rose petals */
+    .petals{
       position:fixed;
       inset:0;
       pointer-events:none;
       overflow:hidden;
-      opacity:.55;
+      opacity:.85;
     }
-    .heart{
+    .petal{
       position:absolute;
+      top:-40px;
       width:18px;
-      height:18px;
-      transform: rotate(45deg);
-      animation: floatUp linear forwards;
-      filter: blur(.2px);
+      height:26px;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.10), transparent 55%),
+                  radial-gradient(circle at 65% 65%, rgba(193,18,31,0.10), transparent 60%),
+                  linear-gradient(180deg, #0b0b12, #05050a);
+      border-radius: 60% 40% 70% 30% / 60% 50% 50% 40%;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,.55));
+      animation: petalFall linear forwards;
+      transform: rotate(0deg);
+      opacity:.9;
     }
-    .heart:before, .heart:after{
-      content:"";
-      position:absolute;
-      width:18px;
-      height:18px;
-      border-radius:50%;
-      background: currentColor;
-    }
-    .heart:before{ left:-9px; }
-    .heart:after{ top:-9px; }
-    @keyframes floatUp{
-      from{ transform: translateY(30vh) rotate(45deg); opacity:0; }
-      15%{opacity:.9}
-      to{ transform: translateY(-120vh) rotate(45deg); opacity:0; }
+    @keyframes petalFall{
+      to{
+        transform: translateY(120vh) rotate(540deg);
+        opacity:0.05;
+      }
     }
 
     .card{
-      width:min(560px, 100%);
+      width:min(580px, 100%);
       border-radius:22px;
-      background:#ffffffcc;
-      backdrop-filter: blur(10px);
-      border:1px solid #ffffff;
-      box-shadow: 0 20px 60px rgba(0,0,0,.12);
-      padding:26px 22px;
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      border:1px solid var(--cardBorder);
+      box-shadow: 0 24px 80px rgba(0,0,0,.65);
+      padding:28px 22px;
       position:relative;
       overflow:hidden;
     }
+
+    .glow{
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(18px 18px at 16% 22%, rgba(193,18,31,.22) 0%, transparent 62%),
+        radial-gradient(16px 16px at 78% 30%, rgba(255,42,59,.16) 0%, transparent 62%),
+        radial-gradient(16px 16px at 52% 78%, rgba(107,15,26,.18) 0%, transparent 62%);
+      pointer-events:none;
+      mix-blend-mode: screen;
+      opacity:.85;
+    }
+
     .topbar{
       display:flex;
       justify-content:center;
@@ -83,8 +100,9 @@
       font-size:12px;
       padding:6px 10px;
       border-radius:999px;
-      background:linear-gradient(90deg, #fff, #fff7);
-      border:1px solid #eee;
+      background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.10);
+      color: rgba(244,244,255,0.88);
     }
 
     h1{
@@ -94,24 +112,13 @@
       letter-spacing:-.4px;
       text-align:center;
     }
+
     .sub{
       margin:0 auto 18px;
-      max-width:48ch;
+      max-width:52ch;
       text-align:center;
       font-size:15px;
-      opacity:.9;
-    }
-
-    .sparkle{
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(14px 14px at 15% 20%, rgba(255,59,122,.35) 0%, transparent 60%),
-        radial-gradient(14px 14px at 78% 28%, rgba(124,77,255,.28) 0%, transparent 60%),
-        radial-gradient(14px 14px at 55% 78%, rgba(53,198,255,.25) 0%, transparent 60%),
-        radial-gradient(14px 14px at 22% 80%, rgba(46,230,166,.22) 0%, transparent 60%);
-      pointer-events:none;
-      mix-blend-mode:multiply;
+      color: var(--muted);
     }
 
     .buttons{
@@ -123,6 +130,7 @@
       position:relative;
       min-height:64px;
     }
+
     button{
       border:0;
       border-radius:16px;
@@ -136,155 +144,137 @@
 
     #yes{
       color:white;
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      box-shadow: 0 12px 26px rgba(255,59,122,.22);
-      min-width:150px;
+      background: linear-gradient(135deg, var(--wine), var(--red2));
+      box-shadow: 0 14px 36px rgba(193,18,31,.28);
+      min-width:170px;
     }
-    #yes:hover{ filter: brightness(1.03); }
+    #yes:hover{ filter: brightness(1.06); }
 
     #no{
-      color:white;
-      background: linear-gradient(135deg, #2b2b2b, #111);
-      box-shadow: 0 12px 26px rgba(0,0,0,.20);
-      min-width:150px;
+      color: rgba(244,244,255,0.92);
+      background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 14px 36px rgba(0,0,0,.45);
+      min-width:170px;
       position:relative;
     }
+    #no:hover{ filter: brightness(1.06); }
 
     .hint{
       text-align:center;
       font-size:12px;
-      opacity:.7;
+      color: rgba(244,244,255,0.62);
       margin-top:10px;
     }
 
     .result{
       margin-top:18px;
       border-radius:18px;
-      background:#fff;
-      border:1px solid #eee;
+      background: rgba(0,0,0,0.28);
+      border:1px solid rgba(255,255,255,0.10);
       padding:16px 16px;
       line-height:1.35;
       font-size:15px;
       text-align:left;
+      color: rgba(244,244,255,0.92);
     }
 
-    .confetti{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-    }
-    .piece{
-      position:absolute;
-      width:10px;
-      height:14px;
-      top:-20px;
-      border-radius:4px;
-      animation: fall 1.9s linear forwards;
-    }
-    @keyframes fall{
-      to { transform: translateY(120vh) rotate(600deg); }
+    .kiss{
+      display:inline-block;
+      margin-left:6px;
+      filter: drop-shadow(0 6px 10px rgba(193,18,31,.25));
     }
 
     @media (max-width:420px){
       h1{ font-size:30px; }
       .card{ padding:22px 18px; }
-      button{ width:100%; }
+      button{ width:100%; min-width:0; }
     }
   </style>
 </head>
-<body>
-  <div class="bg" id="bg"></div>
 
-  <div class="card" id="card">
-    <div class="sparkle"></div>
+<body>
+  <div class="petals" id="petals"></div>
+
+  <div class="card">
+    <div class="glow" id="glow"></div>
 
     <div class="topbar">
-      <span class="pill">💖 for my love</span>
-      <span class="pill">💌 from Andrew</span>
+      <span class="pill">🖤 for my love</span>
+      <span class="pill">🥀 from Andrew</span>
     </div>
 
     <h1>Will you be my Valentine?</h1>
+
     <p class="sub">
-      I know we are a little far apart, but that does not mean I cannot ask you properly.  
-      You have never been asked to be someone’s Valentine before, and I wanted that to be me.  
-      So… here I am asking you, my love. 💖
+      Even with the miles between us, you are my favorite part of every day.  
+      I know you have never been asked to be someone’s Valentine before, and I really wanted to be the one to do that for you.  
+      So… will you be my Valentine, my love? 🥀
     </p>
 
-    <div class="buttons" id="buttons">
-      <button id="yes">Yes, my love 💖</button>
+    <div class="buttons">
+      <button id="yes">Yes, my love 🥀</button>
       <button id="no">No 😭</button>
     </div>
 
-    <div class="hint" id="hint">P.S. the “No” button is kinda dramatic.</div>
+    <div class="hint">P.S. the “No” button is still kinda dramatic.</div>
 
     <div class="result" id="result" style="display:none;"></div>
-
-    <div class="confetti" id="confetti"></div>
   </div>
 
   <script>
-    const bg = document.getElementById("bg");
-    const heartColors = ["#ff3b7a","#7c4dff","#35c6ff","#2ee6a6","#ffd166"];
-
-    function spawnHeart(){
-      const h = document.createElement("div");
-      h.className = "heart";
-      h.style.left = Math.random()*100 + "vw";
-      h.style.bottom = (-10 - Math.random()*30) + "vh";
-      h.style.color = heartColors[Math.floor(Math.random()*heartColors.length)];
-      h.style.opacity = (0.25 + Math.random()*0.55).toFixed(2);
-      const dur = 6 + Math.random()*6;
-      h.style.animationDuration = dur + "s";
-      const size = 10 + Math.random()*18;
-      h.style.width = size + "px";
-      h.style.height = size + "px";
-      bg.appendChild(h);
-      setTimeout(()=>h.remove(), (dur*1000)+200);
-    }
-    setInterval(spawnHeart, 550);
-    for(let i=0;i<10;i++) setTimeout(spawnHeart, i*180);
-
-    const confetti = document.getElementById("confetti");
-    function popConfetti(){
-      confetti.innerHTML = "";
-      const colors = ["#ff3b7a","#7c4dff","#35c6ff","#2ee6a6","#ffd166","#ff8fab"];
-      const pieces = 120;
-
-      for (let i=0; i<pieces; i++){
-        const d = document.createElement("div");
-        d.className = "piece";
-        d.style.left = Math.random()*100 + "%";
-        d.style.background = colors[Math.floor(Math.random()*colors.length)];
-        d.style.animationDelay = (Math.random()*0.25) + "s";
-        d.style.width = (7 + Math.random()*9) + "px";
-        d.style.height = (9 + Math.random()*12) + "px";
-        d.style.opacity = (0.7 + Math.random()*0.3).toFixed(2);
-        d.style.transform = `translateY(0) rotate(${Math.random()*180}deg)`;
-        confetti.appendChild(d);
-      }
-      setTimeout(()=> confetti.innerHTML = "", 2600);
-    }
-
+    const petals = document.getElementById("petals");
+    const glow = document.getElementById("glow");
     const yes = document.getElementById("yes");
     const no = document.getElementById("no");
     const result = document.getElementById("result");
-    const hint = document.getElementById("hint");
-    let noCount = 0;
+
+    function spawnPetal(intensity = 1){
+      for(let k=0;k<intensity;k++){
+        const p = document.createElement("div");
+        p.className = "petal";
+        const left = Math.random()*100;
+        p.style.left = left + "vw";
+
+        const size = 12 + Math.random()*16; // 12-28
+        p.style.width = size + "px";
+        p.style.height = (size * 1.35) + "px";
+
+        const dur = 7 + Math.random()*7; // 7-14s
+        p.style.animationDuration = dur + "s";
+
+        p.style.animationDelay = (Math.random()*0.3) + "s";
+        p.style.opacity = (0.45 + Math.random()*0.5).toFixed(2);
+
+        const wobble = (Math.random()*2 - 1) * 25;
+        p.style.transform = `translateX(${wobble}px) rotate(${Math.random()*120}deg)`;
+
+        petals.appendChild(p);
+        setTimeout(()=>p.remove(), (dur*1000)+800);
+      }
+    }
+
+    // gentle continuous petals
+    setInterval(()=>spawnPetal(1), 450);
+    for(let i=0;i<10;i++) setTimeout(()=>spawnPetal(1), i*160);
+
+    function pulseGlow(){
+      glow.animate(
+        [{opacity:0.65},{opacity:1.0},{opacity:0.75}],
+        {duration:900, iterations:1, easing:"ease-in-out"}
+      );
+    }
 
     function showResult(){
       result.style.display = "block";
       result.innerHTML = `
-        <div style="font-size:18px; font-weight:800; margin-bottom:6px;">YAY!! 💞</div>
-        <div style="opacity:.9">
-          Okay… so I guess this means you are my Valentine now.  
-          And that honestly makes me really happy, my love.<br><br>
+        <div style="font-size:18px; font-weight:800; margin-bottom:6px;">YAY!! <span class="kiss">🖤</span></div>
+        <div style="opacity:.95">
+          Okay… so I am really happy right now. You are my Valentine, my love.<br><br>
 
-          Even though we are a little far apart, I know you have never been asked to be someone’s Valentine before,  
-          and I really wanted to change that for you.<br><br>
+          I just want you to know how thankful I am for you. For the way you care about me, the way you make me laugh, and the way you make even the distance feel a little easier.<br><br>
 
-          I know it is a small thing, but it means a lot to me.  
-          And one day I will get to ask you this in person. 💖<br><br>
+          I know this is just our first Valentine’s Day together, and I cannot wait for the many more we are going to have after this. 🥀<br><br>
 
           I love you mostest. Always.
         </div>
@@ -292,40 +282,30 @@
     }
 
     yes.addEventListener("click", ()=>{
-      popConfetti();
+      spawnPetal(10);      // extra petals instead of confetti
+      pulseGlow();         // subtle romantic glow
       showResult();
       yes.disabled = true;
       no.disabled = true;
-      hint.textContent = "Best answer ever. 💖";
-      yes.style.filter = "brightness(1.05)";
-      no.style.opacity = ".55";
+      no.style.opacity = ".5";
     });
 
+    // dramatic "no" button
     no.addEventListener("mouseenter", ()=>{
-      noCount++;
       const x = (Math.random()*260) - 130;
       const y = (Math.random()*130) - 65;
       no.style.transform = `translate(${x}px, ${y}px)`;
-
-      if(noCount === 2) no.textContent = "Wait 😳";
-      if(noCount === 4) no.textContent = "Be serious 😭";
-      if(noCount >= 6) no.textContent = "Okay okay, YES?";
     });
 
     no.addEventListener("click", ()=>{
-      noCount++;
-      const scale = Math.max(0.62, 1 - noCount*0.08);
-      no.style.transform = `scale(${scale})`;
-
-      if(noCount === 1) no.textContent = "Are you sure?";
-      if(noCount === 2) no.textContent = "Like… sure sure?";
-      if(noCount === 3) no.textContent = "Last chance 😭";
-      if(noCount >= 4){
-        no.textContent = "Fine 😤";
-        yes.style.transform = "scale(1.08)";
-      }
+      // mobile-friendly: shrink a bit each click
+      const current = no.dataset.s || "1";
+      const next = Math.max(0.62, parseFloat(current) - 0.08);
+      no.dataset.s = String(next);
+      no.style.transform = `scale(${next})`;
+      if(next <= 0.78) no.textContent = "Be serious 😭";
+      if(next <= 0.70) no.textContent = "Okay okay…";
     });
   </script>
 </body>
 </html>
-
