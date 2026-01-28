@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💖 A Question For You</title>
+  <style>
+    :root{
+      --pink:#ff3b7a;
+      --purple:#7c4dff;
+      --blue:#35c6ff;
+      --mint:#2ee6a6;
+      --yellow:#ffd166;
+      --text:#1b1b1b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      background:
+        radial-gradient(900px 600px at 10% 10%, #ffe4f1 0%, transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, #e8e7ff 0%, transparent 55%),
+        radial-gradient(900px 600px at 70% 90%, #e3fbff 0%, transparent 55%),
+        linear-gradient(135deg, #fff7fb, #f6f7ff);
+      overflow:hidden;
+    }
+
+    /* floating background hearts */
+    .bg{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      opacity:.55;
+    }
+    .heart{
+      position:absolute;
+      width:18px;
+      height:18px;
+      transform: rotate(45deg);
+      animation: floatUp linear forwards;
+      filter: blur(.2px);
+    }
+    .heart:before, .heart:after{
+      content:"";
+      position:absolute;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background: currentColor;
+    }
+    .heart:before{ left:-9px; }
+    .heart:after{ top:-9px; }
+    @keyframes floatUp{
+      from{ transform: translateY(30vh) rotate(45deg); opacity:0; }
+      15%{opacity:.9}
+      to{ transform: translateY(-120vh) rotate(45deg); opacity:0; }
+    }
+
+    .card{
+      width:min(560px, 100%);
+      border-radius:22px;
+      background:#ffffffcc;
+      backdrop-filter: blur(10px);
+      border:1px solid #ffffff;
+      box-shadow: 0 20px 60px rgba(0,0,0,.12);
+      padding:26px 22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .topbar{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      margin-bottom:10px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:linear-gradient(90deg, #fff, #fff7);
+      border:1px solid #eee;
+    }
+
+    h1{
+      margin:10px 0 8px;
+      font-size:34px;
+      line-height:1.1;
+      letter-spacing:-.4px;
+      text-align:center;
+    }
+    .sub{
+      margin:0 auto 18px;
+      max-width:48ch;
+      text-align:center;
+      font-size:15px;
+      opacity:.9;
+    }
+
+    .sparkle{
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(14px 14px at 15% 20%, rgba(255,59,122,.35) 0%, transparent 60%),
+        radial-gradient(14px 14px at 78% 28%, rgba(124,77,255,.28) 0%, transparent 60%),
+        radial-gradient(14px 14px at 55% 78%, rgba(53,198,255,.25) 0%, transparent 60%),
+        radial-gradient(14px 14px at 22% 80%, rgba(46,230,166,.22) 0%, transparent 60%);
+      pointer-events:none;
+      mix-blend-mode:multiply;
+    }
+
+    .buttons{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+      position:relative;
+      min-height:64px;
+    }
+    button{
+      border:0;
+      border-radius:16px;
+      padding:12px 18px;
+      font-size:16px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+    }
+    button:active{ transform: scale(.98); }
+
+    #yes{
+      color:white;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 12px 26px rgba(255,59,122,.22);
+      min-width:150px;
+    }
+    #yes:hover{ filter: brightness(1.03); }
+
+    #no{
+      color:white;
+      background: linear-gradient(135deg, #2b2b2b, #111);
+      box-shadow: 0 12px 26px rgba(0,0,0,.20);
+      min-width:150px;
+      position:relative;
+    }
+
+    .hint{
+      text-align:center;
+      font-size:12px;
+      opacity:.7;
+      margin-top:10px;
+    }
+
+    .result{
+      margin-top:18px;
+      border-radius:18px;
+      background:#fff;
+      border:1px solid #eee;
+      padding:16px 16px;
+      line-height:1.35;
+      font-size:15px;
+      text-align:left;
+    }
+
+    .choices{
+      margin:12px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:8px;
+    }
+    .choice{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid #f0f0f0;
+      background:linear-gradient(90deg, #fff, #fff7);
+    }
+
+    .footer{
+      margin-top:12px;
+      text-align:center;
+      font-size:12px;
+      opacity:.65;
+    }
+
+    /* Confetti */
+    .confetti{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .piece{
+      position:absolute;
+      width:10px;
+      height:14px;
+      top:-20px;
+      border-radius:4px;
+      animation: fall 1.9s linear forwards;
+    }
+    @keyframes fall{
+      to { transform: translateY(120vh) rotate(600deg); }
+    }
+
+    /* small screens spacing */
+    @media (max-width:420px){
+      h1{ font-size:30px; }
+      .card{ padding:22px 18px; }
+      button{ width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" id="bg"></div>
+
+  <div class="card" id="card">
+    <div class="sparkle"></div>
+
+    <div class="topbar">
+      <span class="pill">✨ cute</span>
+      <span class="pill">🎀 colorful</span>
+      <span class="pill">💌 from Andrew</span>
+    </div>
+
+    <h1>Will you be my Valentine?</h1>
+    <p class="sub">
+      I know we are long distance, but I wanted you to have a real “asked to be my Valentine” moment.
+      You deserve that.
+    </p>
+
+    <div class="buttons" id="buttons">
+      <button id="yes">Yes 💖</button>
+      <button id="no">No 😭</button>
+    </div>
+
+    <div class="hint" id="hint">P.S. the “No” button is kinda dramatic.</div>
+
+    <div class="result" id="result" style="display:none;"></div>
+
+    <div class="confetti" id="confetti"></div>
+  </div>
+
+  <script>
+    // ---------- Background floating hearts ----------
+    const bg = document.getElementById("bg");
+    const heartColors = ["#ff3b7a","#7c4dff","#35c6ff","#2ee6a6","#ffd166"];
+
+    function spawnHeart(){
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.style.left = Math.random()*100 + "vw";
+      h.style.bottom = (-10 - Math.random()*30) + "vh";
+      h.style.color = heartColors[Math.floor(Math.random()*heartColors.length)];
+      h.style.opacity = (0.25 + Math.random()*0.55).toFixed(2);
+      const dur = 6 + Math.random()*6;
+      h.style.animationDuration = dur + "s";
+      const size = 10 + Math.random()*18;
+      h.style.width = size + "px";
+      h.style.height = size + "px";
+      bg.appendChild(h);
+      setTimeout(()=>h.remove(), (dur*1000)+200);
+    }
+    setInterval(spawnHeart, 550);
+    for(let i=0;i<10;i++) setTimeout(spawnHeart, i*180);
+
+    // ---------- Confetti ----------
+    const confetti = document.getElementById("confetti");
+    function popConfetti(){
+      confetti.innerHTML = "";
+      const colors = ["#ff3b7a","#7c4dff","#35c6ff","#2ee6a6","#ffd166","#ff8fab"];
+      const pieces = 120;
+
+      for (let i=0; i<pieces; i++){
+        const d = document.createElement("div");
+        d.className = "piece";
+        d.style.left = Math.random()*100 + "%";
+        d.style.background = colors[Math.floor(Math.random()*colors.length)];
+        d.style.animationDelay = (Math.random()*0.25) + "s";
+        d.style.width = (7 + Math.random()*9) + "px";
+        d.style.height = (9 + Math.random()*12) + "px";
+        d.style.opacity = (0.7 + Math.random()*0.3).toFixed(2);
+        d.style.transform = `translateY(0) rotate(${Math.random()*180}deg)`;
+        confetti.appendChild(d);
+      }
+      setTimeout(()=> confetti.innerHTML = "", 2600);
+    }
+
+    // ---------- Buttons behavior ----------
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
+    const result = document.getElementById("result");
+    const hint = document.getElementById("hint");
+    let noCount = 0;
+
+    function showResult(){
+      result.style.display = "block";
+      result.innerHTML = `
+        <div style="font-size:18px; font-weight:800; margin-bottom:6px;">YAY!! 💞</div>
+        <div style="opacity:.9">
+          Okay so it is official: you are my Valentine.  
+          I am really happy I got to ask you like this.
+        </div>
+        <ul class="choices">
+          <li class="choice">🎬 Movie night on FaceTime</li>
+          <li class="choice">🎮 Game night together</li>
+          <li class="choice">🍽️ Dinner on a call (same time, different place)</li>
+        </ul>
+        <div class="footer">Text me: <strong>"I said YES"</strong> so I can send your surprise 💝</div>
+      `;
+    }
+
+    yes.addEventListener("click", ()=>{
+      popConfetti();
+      showResult();
+      yes.disabled = true;
+      no.disabled = true;
+      hint.textContent = "Best answer ever. 💖";
+      yes.style.filter = "brightness(1.05)";
+      no.style.opacity = ".55";
+    });
+
+    // Desktop: dodge on hover
+    no.addEventListener("mouseenter", ()=>{
+      noCount++;
+      const x = (Math.random()*260) - 130;
+      const y = (Math.random()*130) - 65;
+      no.style.transform = `translate(${x}px, ${y}px)`;
+
+      if(noCount === 2) no.textContent = "Wait 😳";
+      if(noCount === 4) no.textContent = "Be serious 😭";
+      if(noCount >= 6) no.textContent = "Okay okay, YES?";
+    });
+
+    // Mobile: click makes it less "clickable"
+    no.addEventListener("click", ()=>{
+      noCount++;
+      const scale = Math.max(0.62, 1 - noCount*0.08);
+      no.style.transform = `scale(${scale})`;
+
+      if(noCount === 1) no.textContent = "Are you sure?";
+      if(noCount === 2) no.textContent = "Like… sure sure?";
+      if(noCount === 3) no.textContent = "Last chance 😭";
+      if(noCount >= 4){
+        no.textContent = "Fine 😤";
+        yes.style.transform = "scale(1.08)";
+      }
+    });
+  </script>
+</body>
+</html>
