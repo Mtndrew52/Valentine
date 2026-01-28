@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>💖 A Question For You</title>
+  <title>💖 For My Love</title>
   <style>
     :root{
       --pink:#ff3b7a;
@@ -30,7 +30,6 @@
       overflow:hidden;
     }
 
-    /* floating background hearts */
     .bg{
       position:fixed;
       inset:0;
@@ -169,28 +168,6 @@
       text-align:left;
     }
 
-    .choices{
-      margin:12px 0 0;
-      padding:0;
-      list-style:none;
-      display:grid;
-      gap:8px;
-    }
-    .choice{
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid #f0f0f0;
-      background:linear-gradient(90deg, #fff, #fff7);
-    }
-
-    .footer{
-      margin-top:12px;
-      text-align:center;
-      font-size:12px;
-      opacity:.65;
-    }
-
-    /* Confetti */
     .confetti{
       position:absolute;
       inset:0;
@@ -209,7 +186,6 @@
       to { transform: translateY(120vh) rotate(600deg); }
     }
 
-    /* small screens spacing */
     @media (max-width:420px){
       h1{ font-size:30px; }
       .card{ padding:22px 18px; }
@@ -224,19 +200,19 @@
     <div class="sparkle"></div>
 
     <div class="topbar">
-      <span class="pill">✨ cute</span>
-      <span class="pill">🎀 colorful</span>
+      <span class="pill">💖 for my love</span>
       <span class="pill">💌 from Andrew</span>
     </div>
 
     <h1>Will you be my Valentine?</h1>
     <p class="sub">
-      I know we are long distance, but I wanted you to have a real “asked to be my Valentine” moment.
-      You deserve that.
+      I know we are a little far apart, but that does not mean I cannot ask you properly.  
+      You have never been asked to be someone’s Valentine before, and I wanted that to be me.  
+      So… here I am asking you, my love. 💖
     </p>
 
     <div class="buttons" id="buttons">
-      <button id="yes">Yes 💖</button>
+      <button id="yes">Yes, my love 💖</button>
       <button id="no">No 😭</button>
     </div>
 
@@ -248,7 +224,6 @@
   </div>
 
   <script>
-    // ---------- Background floating hearts ----------
     const bg = document.getElementById("bg");
     const heartColors = ["#ff3b7a","#7c4dff","#35c6ff","#2ee6a6","#ffd166"];
 
@@ -270,7 +245,6 @@
     setInterval(spawnHeart, 550);
     for(let i=0;i<10;i++) setTimeout(spawnHeart, i*180);
 
-    // ---------- Confetti ----------
     const confetti = document.getElementById("confetti");
     function popConfetti(){
       confetti.innerHTML = "";
@@ -292,7 +266,6 @@
       setTimeout(()=> confetti.innerHTML = "", 2600);
     }
 
-    // ---------- Buttons behavior ----------
     const yes = document.getElementById("yes");
     const no = document.getElementById("no");
     const result = document.getElementById("result");
@@ -304,15 +277,17 @@
       result.innerHTML = `
         <div style="font-size:18px; font-weight:800; margin-bottom:6px;">YAY!! 💞</div>
         <div style="opacity:.9">
-          Okay so it is official: you are my Valentine.  
-          I am really happy I got to ask you like this.
+          Okay… so I guess this means you are my Valentine now.  
+          And that honestly makes me really happy, my love.<br><br>
+
+          Even though we are a little far apart, I know you have never been asked to be someone’s Valentine before,  
+          and I really wanted to change that for you.<br><br>
+
+          I know it is a small thing, but it means a lot to me.  
+          And one day I will get to ask you this in person. 💖<br><br>
+
+          I love you mostest. Always.
         </div>
-        <ul class="choices">
-          <li class="choice">🎬 Movie night on FaceTime</li>
-          <li class="choice">🎮 Game night together</li>
-          <li class="choice">🍽️ Dinner on a call (same time, different place)</li>
-        </ul>
-        <div class="footer">Text me: <strong>"I said YES"</strong> so I can send your surprise 💝</div>
       `;
     }
 
@@ -326,7 +301,6 @@
       no.style.opacity = ".55";
     });
 
-    // Desktop: dodge on hover
     no.addEventListener("mouseenter", ()=>{
       noCount++;
       const x = (Math.random()*260) - 130;
@@ -338,7 +312,6 @@
       if(noCount >= 6) no.textContent = "Okay okay, YES?";
     });
 
-    // Mobile: click makes it less "clickable"
     no.addEventListener("click", ()=>{
       noCount++;
       const scale = Math.max(0.62, 1 - noCount*0.08);
@@ -355,3 +328,4 @@
   </script>
 </body>
 </html>
+
